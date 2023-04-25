@@ -17,3 +17,12 @@ When a customer is ready to check out, QRShop will automatically calculate the t
 With QRShop, small business owners can streamline their operations, save time, and boost sales - all with a simple and easy-to-use app. So whether you're a new shop owner or an established business, QRShop is the perfect solution for managing your shop with ease.
 
 
+The Page are as Follows
+1.HOMEPAGE
+2.CREATE PRODUCT(QR CODE GENERATOR)
+3.CHECKOUT PAGE FOR QR CODE SCANNING AND TRANSCATIONS
+
+
+![homepageQRSHOP](https://user-images.githubusercontent.com/65674370/234219889-ec6929e5-c4c1-4f2f-9b83-b8a3c41e3937.png)
+![createproductQRSHOP](https://user-images.githubusercontent.com/65674370/234219903-3331f91f-a92c-42c3-b374-874555cf2a80.png)
+![shoppingpageQRSHOP](https://user-images.githubusercontent.com/65674370/234219908-e009278a-46fb-4d59-ae55-3b44bce24c9c.png)
