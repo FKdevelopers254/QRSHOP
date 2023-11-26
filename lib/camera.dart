@@ -1,15 +1,13 @@
-import 'dart:convert';
+
 import 'dart:io';
 import 'package:excel/excel.dart';
-import 'package:http/http.dart' as http;
+
 import 'package:path_provider/path_provider.dart';
 import 'package:open_file/open_file.dart';
 
-
-import 'package:camera/saved_products.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
 
 import 'cameratwo.dart';
 import 'docx.dart';
@@ -107,7 +105,7 @@ class _QRScannerPageState extends State<QRScannerPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Scan QR Code'),
+        title: const Text('Scan QR Code'),
       ),
       body: Column(
         children: [
@@ -117,10 +115,10 @@ class _QRScannerPageState extends State<QRScannerPage> {
               onQRViewCreated: _onQRViewCreated,
             ),
           ),
-          SizedBox(height: 20),
-          Text(
+          const SizedBox(height: 20),
+          const Text(
             'Products:',
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
           Expanded(
             child: ListView.builder(
@@ -133,11 +131,11 @@ class _QRScannerPageState extends State<QRScannerPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text('\$${product.price.toStringAsFixed(2)}'),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       Row(
                         children: [
                           IconButton(
-                            icon: Icon(Icons.remove),
+                            icon: const Icon(Icons.remove),
                             onPressed: () {
                               setState(() {
                                 product.quantity--;
@@ -147,7 +145,7 @@ class _QRScannerPageState extends State<QRScannerPage> {
                           ),
                           Text(product.quantity.toString()),
                           IconButton(
-                            icon: Icon(Icons.add),
+                            icon: const Icon(Icons.add),
                             onPressed: () {
                               setState(() {
                                 product.quantity++;
@@ -160,7 +158,7 @@ class _QRScannerPageState extends State<QRScannerPage> {
                     ],
                   ),
                   trailing: IconButton(
-                    icon: Icon(Icons.delete),
+                    icon: const Icon(Icons.delete),
                     onPressed: () {
                       setState(() {
                         products.removeAt(index);
@@ -176,13 +174,13 @@ class _QRScannerPageState extends State<QRScannerPage> {
 
           Text(
             'Total: \$${_getTotalPrice().toStringAsFixed(2)}',
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
 
 
 
           ElevatedButton(
-            child: Text('Save and Open'),
+            child: const Text('Save and Open'),
             onPressed: () async {
               // Save the data to the spreadsheet file
               await _saveToSpreadsheets();
@@ -195,7 +193,7 @@ class _QRScannerPageState extends State<QRScannerPage> {
             },
           ),
           ElevatedButton(
-            child: Text('Save'),
+            child: const Text('Save'),
             onPressed: () async {
               // Save the data to the spreadsheet file
               await _saveToSpreadsheet();
@@ -211,11 +209,11 @@ class _QRScannerPageState extends State<QRScannerPage> {
           ElevatedButton(
               onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context) => QRPage()));
               },
-              child: Text('Make QR')),
+              child: const Text('Make QR')),
           ElevatedButton(
               onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context) => QRScannerPaget()));
               },
-              child: Text('QR Scanner Two')),
+              child: const Text('QR Scanner Two')),
 
 
 

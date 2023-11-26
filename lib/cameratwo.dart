@@ -1,16 +1,15 @@
-import 'dart:convert';
+
 import 'dart:io';
 import 'package:excel/excel.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:http/http.dart' as http;
+
 import 'package:path_provider/path_provider.dart';
 import 'package:open_file/open_file.dart';
 
 
-import 'package:camera/saved_products.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
 
 import 'docx.dart';
 
@@ -21,6 +20,9 @@ class QRScannerPaget extends StatefulWidget {
 
 class _QRScannerPagetState extends State<QRScannerPaget> {
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
+
+  final GlobalKey<ScaffoldMessengerState> _scaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
+
   late QRViewController controller;
   List<Product> products = [];
   double _totalPrice = 0;
@@ -63,6 +65,19 @@ class _QRScannerPagetState extends State<QRScannerPaget> {
     // Save the spreadsheet file and open it
     await file.writeAsBytes(excel.encode()!);
     await OpenFile.open(filePath);
+
+
+    _scaffoldMessengerKey.currentState?.showSnackBar(
+      SnackBar(
+        content: Text('Product added successfully.'),
+      ),
+    );
+
+    setState(() {
+      products.clear();
+      _totalPrice = 0;
+    });
+
   }
 
 
@@ -102,8 +117,17 @@ class _QRScannerPagetState extends State<QRScannerPaget> {
     // Save the spreadsheet file and open it
     await file.writeAsBytes(excel.encode()!);
 
+
+    _scaffoldMessengerKey.currentState?.showSnackBar(
+      SnackBar(
+        content: Text('Product added successfully.'),
+      ),
+    );
+
+
+
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Data saved successfully')),
+      const SnackBar(content: Text('Data saved successfully')),
     );
 
     // Clear the products list and update the total price
@@ -127,134 +151,238 @@ class _QRScannerPagetState extends State<QRScannerPaget> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Scan QR Code',style: GoogleFonts.andika(),),
-        actions: [ ],
-      ),
-      body: Column(
-        children: [
-          Expanded(
-            child: QRView(
-              key: qrKey,
-              onQRViewCreated: _onQRViewCreated,
+    return ScaffoldMessenger(
+      key: _scaffoldMessengerKey,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            'Scan QR Code',
+            style: GoogleFonts.andika(),
+          ),
+          actions: const [],
+          backgroundColor: Colors.blue, // Set the background color of the AppBar
+          centerTitle: true, // Center align the title
+          elevation: 2, // Add a shadow effect to the AppBar
+          iconTheme: const IconThemeData(color: Colors.white), toolbarTextStyle: const TextTheme(
+            titleLarge: TextStyle(
+              color: Colors.white,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
             ),
-          ),
-
-          Row(
-            children: [
-
-              ElevatedButton(
-                child: Text('Save and Open'),
-                onPressed: () async {
-                  // Save the data to the spreadsheet file
-                  await _saveToSpreadsheets();
-
-                  // Clear the products list and update the total price
-                  setState(() {
-                    products.clear();
-                    _totalPrice = 0;
-                  });
-                },
+          ).bodyMedium, titleTextStyle: const TextTheme(
+            titleLarge: TextStyle(
+              color: Colors.white,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ).titleLarge, // Set the text style of the title
+        )
+        ,
+        body: Column(
+          children: [
+            Expanded(
+              child: QRView(
+                key: qrKey,
+                onQRViewCreated: _onQRViewCreated,
               ),
-              ElevatedButton(
-                  onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context) => QRPage()));
+            ),
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+
+                ElevatedButton(
+                  onPressed: () async {
+                    // Save the data to the spreadsheet file
+                    await _saveToSpreadsheets();
+
+                    // Clear the products list and update the total price
+                    setState(() {
+                      products.clear();
+                      _totalPrice = 0;
+                    });
                   },
-                  child: Text('Make QR')),
-              ElevatedButton(
-                child: Text('Save'),
-                onPressed: () async {
-                  // Save the data to the spreadsheet file
-                  await _saveToSpreadsheet();
-
-                  // Clear the products list and update the total price
-
-                },
-              ),
-
-            ],
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          ),
-          Text(
-            'Products:',
-            style: GoogleFonts.andika(fontSize: 20),
-          ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: products.length,
-              itemBuilder: (context, index) {
-                Product product = products[index];
-                return Card(
-                  color: Colors.blue.withOpacity(0.6),
-                  child: ListTile(
-                    title: Text(product.name,style: GoogleFonts.andika(color: Colors.white,fontSize: 30,fontWeight: FontWeight.w400)),
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('Ksh  ${product.price.toStringAsFixed(2)}',style: GoogleFonts.andika(fontWeight: FontWeight.bold,fontSize: 15),),
-                        SizedBox(height: 10),
-                        Row(
-                          children: [
-                            Container(
-
-                              child: IconButton(
-
-                                icon: Icon(Icons.remove,color: Colors.white,),
-                                onPressed: () {
-                                  setState(() {
-                                    product.quantity--;
-                                    _totalPrice -= product.price;
-                                  });
-                                },
-                              ),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
-                                color: Colors.red ,
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(product.quantity.toString(),style: GoogleFonts.andika(fontWeight: FontWeight.bold,fontSize: 30),),
-                            ),
-                            Container(
-                              child: IconButton(
-                                icon: Icon(Icons.add,color: Colors.white,),
-                                onPressed: () {
-                                  setState(() {
-                                    product.quantity++;
-                                    _totalPrice += product.price;
-                                  });
-                                },
-                              ),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  color: Colors.green ,
-                                )
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    trailing: IconButton(
-                      icon: Icon(Icons.delete,color: Colors.red,),
-                      onPressed: () {
-                        setState(() {
-                          products.removeAt(index);
-                          _totalPrice -= product.price * product.quantity;
-                        });
-                      },
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.green, // Set the button's background color
+                    onPrimary: Colors.white, // Set the button's text color
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10), // Set the button's border radius
                     ),
                   ),
-                );
-              },
+                  child: Text(
+                    'Save and Open',
+                    style: TextStyle(
+                      fontSize: 16, // Set the button's text size
+                      fontWeight: FontWeight.bold, // Set the button's text weight
+                    ),
+                  ),
+                )
+,
+
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const QRPage()),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: Colors.white, backgroundColor: Colors.blue, // Set the button's text color
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10), // Set the button's border radius
+                    ),
+                  ),
+                  child: const Text(
+                    'Create QR Code',
+                    style: TextStyle(
+                      fontSize: 16, // Set the button's text size
+                      fontWeight: FontWeight.bold, // Set the button's text weight
+                    ),
+                  ),
+                ),
+
+
+
+
+
+
+                ElevatedButton(
+                  onPressed: () async {
+                    // Save the data to the spreadsheet file
+                    await _saveToSpreadsheet();
+
+                    // Clear the products list and update the total price
+
+                    setState(() {
+                      products.clear();
+                      _totalPrice = 0;
+                    });
+                  },
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: Colors.white, backgroundColor: Colors.blue, // Set the button's text color
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10), // Set the button's border radius
+                    ),
+                  ),
+                  child: Text(
+                    'Quick Save',
+                    style: TextStyle(
+                      fontSize: 16, // Set the button's text size
+                      fontWeight: FontWeight.bold, // Set the button's text weight
+                    ),
+                  ),
+                )
+                ,
+
+              ],
             ),
-          ),
+            Text(
+              'Products:',
+              style: GoogleFonts.andika(
+                fontSize: 20, // Set the text's font size
+                fontWeight: FontWeight.bold, // Set the text's font weight
+                color: Colors.blue, // Set the text's color
+              ),
+            )
+            ,
+            Expanded(
+              child: ListView.builder(
+                itemCount: products.length,
+                itemBuilder: (context, index) {
+                  Product product = products[index];
+                  return Card(
+                    color: Colors.blue.withOpacity(0.6),
+                    child: ListTile(
+                      title: Text(
+                        product.name,
+                        style: GoogleFonts.andika(
+                          color: Colors.white,
+                          fontSize: 30,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Ksh ${product.price.toStringAsFixed(2)}',
+                            style: GoogleFonts.andika(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15,
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                          Row(
+                            children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: Colors.red,
+                                ),
+                                child: IconButton(
+                                  icon: const Icon(Icons.remove, color: Colors.white),
+                                  onPressed: () {
+                                    setState(() {
+                                      product.quantity--;
+                                      _totalPrice -= product.price;
+                                    });
+                                  },
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  product.quantity.toString(),
+                                  style: GoogleFonts.andika(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 30,
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: Colors.green,
+                                ),
+                                child: IconButton(
+                                  icon: const Icon(Icons.add, color: Colors.white),
+                                  onPressed: () {
+                                    setState(() {
+                                      product.quantity++;
+                                      _totalPrice += product.price;
+                                    });
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      trailing: IconButton(
+                        icon: const Icon(Icons.delete, color: Colors.red),
+                        onPressed: () {
+                          setState(() {
+                            products.removeAt(index);
+                            _totalPrice -= product.price * product.quantity;
+                          });
+                        },
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
 
 
-          Text(
-            'Total: \$${_getTotalPrice().toStringAsFixed(2)}',
-            style: GoogleFonts.andika(fontSize: 20),
-          ),
+            Text(
+              'Total: \$${_getTotalPrice().toStringAsFixed(2)}',
+              style: GoogleFonts.andika(
+                fontSize: 20, // Set the text's font size
+                fontWeight: FontWeight.bold, // Set the text's font weight
+                color: Colors.green, // Set the text's color
+              ),
+            )
+            ,
 
 
 
@@ -262,8 +390,9 @@ class _QRScannerPagetState extends State<QRScannerPaget> {
 
 
 
-          SizedBox(height: 20),
-        ],
+            const SizedBox(height: 20),
+          ],
+        ),
       ),
     );
   }

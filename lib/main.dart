@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
 
       ),
-      home: Travelplanner(),
+      home: Intro(),
      debugShowCheckedModeBanner: false,
      // home: QRScannerPaget()
      // home: QRScannerPage()
