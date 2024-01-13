@@ -23,6 +23,6 @@ The Page are as Follows
 3.CHECKOUT PAGE FOR QR CODE SCANNING AND TRANSCATIONS
 
 
-![homepageQRSHOP](https://user-images.githubusercontent.com/65674370/234219889-ec6929e5-c4c1-4f2f-9b83-b8a3c41e3937.png)
-![createproductQRSHOP](https://user-images.githubusercontent.com/65674370/234219903-3331f91f-a92c-42c3-b374-874555cf2a80.png)
-![shoppingpageQRSHOP](https://user-images.githubusercontent.com/65674370/234219908-e009278a-46fb-4d59-ae55-3b44bce24c9c.png)
+<img src="https://github.com/FKdevelopers254/FKdevelopers254/assets/65674370/9fe70998-9205-477a-a67f-e997e3dbd148" alt="Screenshot (120)" height="350">
+<img src="https://github.com/FKdevelopers254/FKdevelopers254/assets/65674370/fe128afa-27e0-4c41-82df-eedfe16c3d97" alt="Screenshot (120)" height="350">
+
