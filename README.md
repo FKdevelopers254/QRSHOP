@@ -22,9 +22,5 @@ The Page are as Follows
 2.CREATE PRODUCT(QR CODE GENERATOR)
 3.CHECKOUT PAGE FOR QR CODE SCANNING AND TRANSCATIONS
 
-
-![createqr](https://github.com/FKdevelopers254/QRSHOP/assets/65674370/123742f0-55d4-4e85-bab8-8c2a23edda14)
-![intropage](https://github.com/FKdevelopers254/QRSHOP/assets/65674370/9d49c9e9-c6df-431e-9bc7-1999cdc21cb7)
-
 <img src="https://github.com/FKdevelopers254/QRSHOP/assets/65674370/123742f0-55d4-4e85-bab8-8c2a23edda14" alt="createqr" height="300">
 <img src="https://github.com/FKdevelopers254/QRSHOP/assets/65674370/9d49c9e9-c6df-431e-9bc7-1999cdc21cb7" alt="intropage" height="300">
