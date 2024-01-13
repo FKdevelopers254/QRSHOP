@@ -26,6 +26,5 @@ The Page are as Follows
 ![createqr](https://github.com/FKdevelopers254/QRSHOP/assets/65674370/123742f0-55d4-4e85-bab8-8c2a23edda14)
 ![intropage](https://github.com/FKdevelopers254/QRSHOP/assets/65674370/9d49c9e9-c6df-431e-9bc7-1999cdc21cb7)
 
-<img src="https://github.com/FKdevelopers254/FKdevelopers254/assets/65674370/df6fe1ff-4acd-43b1-85ca-0a8792e3bf00" alt="Screenshot (120)" height="350">
-<img src="https://github.com/FKdevelopers254/FKdevelopers254/assets/65674370/5d9bca38-765e-418e-90ed-6f1d70272344" alt="Screenshot (120)" height="350">
-
+<img src="https://github.com/FKdevelopers254/QRSHOP/assets/65674370/123742f0-55d4-4e85-bab8-8c2a23edda14" alt="createqr" height="300">
+<img src="https://github.com/FKdevelopers254/QRSHOP/assets/65674370/9d49c9e9-c6df-431e-9bc7-1999cdc21cb7" alt="intropage" height="300">
