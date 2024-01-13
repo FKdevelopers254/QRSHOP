@@ -23,6 +23,7 @@ The Page are as Follows
 3.CHECKOUT PAGE FOR QR CODE SCANNING AND TRANSCATIONS
 
 
-<img src="https://github.com/FKdevelopers254/FKdevelopers254/assets/65674370/9fe70998-9205-477a-a67f-e997e3dbd148" alt="Screenshot (120)" height="350">
-<img src="https://github.com/FKdevelopers254/FKdevelopers254/assets/65674370/fe128afa-27e0-4c41-82df-eedfe16c3d97" alt="Screenshot (120)" height="350">
+
+<img src="https://github.com/FKdevelopers254/FKdevelopers254/assets/65674370/df6fe1ff-4acd-43b1-85ca-0a8792e3bf00" alt="Screenshot (120)" height="350">
+<img src="https://github.com/FKdevelopers254/FKdevelopers254/assets/65674370/5d9bca38-765e-418e-90ed-6f1d70272344" alt="Screenshot (120)" height="350">
 
